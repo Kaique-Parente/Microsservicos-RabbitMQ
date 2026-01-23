@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.microservice.user.dto.LoginRequestDTO;
+import com.microservice.user.dto.LoginRequestDto;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -33,7 +33,7 @@ public class UserModel implements Serializable{
     private String email;
     private String password;
 
-    public boolean isLoginCorrect(LoginRequestDTO loginRequestDTO, PasswordEncoder passwordEncoder){
+    public boolean isLoginCorrect(LoginRequestDto loginRequestDTO, PasswordEncoder passwordEncoder){
         return passwordEncoder.matches(loginRequestDTO.password(), this.password);
     }
 }

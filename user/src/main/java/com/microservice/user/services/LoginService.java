@@ -10,8 +10,8 @@ import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.microservice.user.dto.LoginRequestDTO;
-import com.microservice.user.dto.LoginResponseDTO;
+import com.microservice.user.dto.LoginRequestDto;
+import com.microservice.user.dto.LoginResponseDto;
 import com.microservice.user.repository.UserRepository;
 
 import jakarta.transaction.Transactional;
@@ -31,7 +31,7 @@ public class LoginService {
     }
 
     @Transactional
-    public LoginResponseDTO login(@Valid LoginRequestDTO loginRequestDTO){
+    public LoginResponseDto login(@Valid LoginRequestDto loginRequestDTO){
 
         var user = userRepository.findByEmail(loginRequestDTO.email());
 
@@ -51,6 +51,6 @@ public class LoginService {
         
         var jwtValue = jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
 
-        return new LoginResponseDTO(jwtValue, expiresIn);
+        return new LoginResponseDto(jwtValue, expiresIn);
     }
 }

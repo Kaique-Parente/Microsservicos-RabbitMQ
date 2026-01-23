@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.microservice.user.dto.LoginRequestDTO;
-import com.microservice.user.dto.LoginResponseDTO;
+import com.microservice.user.dto.LoginRequestDto;
+import com.microservice.user.dto.LoginResponseDto;
 import com.microservice.user.services.LoginService;
 
 @RestController
@@ -20,7 +20,7 @@ public class LoginController {
     }
 
     @PostMapping
-    public ResponseEntity<LoginResponseDTO> login(LoginRequestDTO loginRequestDTO){
+    public ResponseEntity<LoginResponseDto> login(LoginRequestDto loginRequestDTO){
         return ResponseEntity.ok(loginService.login(loginRequestDTO));
     }
 

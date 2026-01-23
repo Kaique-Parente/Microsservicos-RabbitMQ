@@ -1,5 +1,5 @@
 package com.microservice.user.dto;
 
-public record LoginResponseDTO(String accessToken,
+public record LoginResponseDto(String accessToken,
                                Long expiresIn) {
 }
