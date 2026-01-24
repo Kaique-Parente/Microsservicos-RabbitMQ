@@ -1,0 +1,61 @@
+services:
+  mysql-user:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ms-user
+      MYSQL_USER: userAcess
+      MYSQL_PASSWORD: userPassword
+    ports:
+      - "3307:3306"
+    networks:
+      - app-network
+    volumes:
+      - mysql-user-data:/var/lib/mysql
+
+  mysql-email:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ms-email
+      MYSQL_USER: emailAcess
+      MYSQL_PASSWORD: emailPassword
+    ports:
+      - "3308:3306"
+    networks:
+      - app-network
+    volumes:
+      - mysql-email-data:/var/lib/mysql
+    
+  user-service:
+    build: ./user
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-user:3306/ms-user
+      SPRING_DATASOURCE_USERNAME: userAcess
+      SPRING_DATASOURCE_PASSWORD: userPassword
+    depends_on:
+      - mysql-user
+    networks:
+      - app-network
+
+  email-service:
+    build: ./email
+    ports:
+      - "8082:8082"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-email:3306/ms-email
+      SPRING_DATASOURCE_USERNAME: emailAcess
+      SPRING_DATASOURCE_PASSWORD: emailPassword
+    depends_on:
+      - mysql-email
+    networks:
+      - app-network
+
+volumes:
+  mysql-user-data: {}
+  mysql-email-data: {}
+
+networks:
+  app-network: {}
