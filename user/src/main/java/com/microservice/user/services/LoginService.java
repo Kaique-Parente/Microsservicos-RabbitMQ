@@ -15,7 +15,6 @@ import com.microservice.user.dto.LoginResponseDto;
 import com.microservice.user.repository.UserRepository;
 
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 
 @Service
 public class LoginService {
@@ -31,9 +30,11 @@ public class LoginService {
     }
 
     @Transactional
-    public LoginResponseDto login(@Valid LoginRequestDto loginRequestDTO){
+    public LoginResponseDto login(LoginRequestDto loginRequestDTO){
 
         var user = userRepository.findByEmail(loginRequestDTO.email());
+        System.out.println(loginRequestDTO.email());
+        System.out.println(loginRequestDTO.password());
 
         if(user.isEmpty() || !user.get().isLoginCorrect(loginRequestDTO, passwordEncoder)){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Email incorreto ou senha inválida!");
