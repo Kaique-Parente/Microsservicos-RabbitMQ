@@ -8,11 +8,11 @@ import com.microservice.user.dto.EmailDto;
 import com.microservice.user.models.UserModel;
 
 @Component
-public class UserProducer {
+public class UserEmailProducer {
     
     final RabbitTemplate rabbitTemplate;
 
-    public UserProducer(RabbitTemplate rabbitTemplate){
+    public UserEmailProducer(RabbitTemplate rabbitTemplate){
         this.rabbitTemplate = rabbitTemplate;
     }
 

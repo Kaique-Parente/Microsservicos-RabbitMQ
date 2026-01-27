@@ -15,6 +15,7 @@ import com.microservice.user.dto.CreateUserDto;
 import com.microservice.user.dto.UserResponseDto;
 import com.microservice.user.models.UserModel;
 import com.microservice.user.services.UserService;
+import com.microservice.user.usecase.CreateUserUseCase;
 
 import jakarta.validation.Valid;
 
@@ -22,15 +23,17 @@ import jakarta.validation.Valid;
 @RequestMapping("/users")
 public class UserController {
 
-    final UserService userService;
+    private final UserService userService;
+    private final CreateUserUseCase createUserUseCase;
 
-    public UserController(UserService userService){
+    public UserController(UserService userService, CreateUserUseCase createUserUseCase){
         this.userService = userService;
+        this.createUserUseCase = createUserUseCase;
     }
 
     @PostMapping
     public ResponseEntity<UserResponseDto> saveUser(@RequestBody @Valid CreateUserDto userRecordDto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(userRecordDto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(createUserUseCase.execute(userRecordDto));
     }
 
     @GetMapping
